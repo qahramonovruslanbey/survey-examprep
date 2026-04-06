@@ -4,7 +4,7 @@ from datetime import datetime
 
 st.title("Exam Revision Planning and Confidence Survey")
 
-# ---------------- DEFAULT QUESTIONS ----------------
+# Default questions:
 default_questions = [
     {"q": "How early do you start preparing for exams?",
      "opts": [("Very early",0),("Early",1),("A bit late",2),("Very late",3),("Last minute",4)]},
@@ -52,7 +52,7 @@ default_questions = [
      "opts": [("Fully prepared",0),("Mostly prepared",1),("Somewhat prepared",2),("Slightly prepared",3),("Not prepared at all",4)]}
 ]
 
-# ---------------- SESSION STATE ----------------
+# Session state code:
 if "default_questions" not in st.session_state:
     st.session_state.custom_questions = None
 
@@ -62,7 +62,7 @@ if "start" not in st.session_state:
 if "participant" not in st.session_state:
     st.session_state.participant = {}
 
-# ---------------- HELPERS ----------------
+# assistants:
 def normalize_questionnaire(raw_data):
     """
     Accepts:
@@ -259,7 +259,7 @@ def render_questionnaire(questions):
             file_name=participant.get("student_id", "result") + "_result.txt"
         )
 
-# ---------------- MENU ----------------
+# Menu bar:
 option = st.selectbox(
     "Choose option",
     [
@@ -269,7 +269,7 @@ option = st.selectbox(
     ]
 )
 
-# ---------------- LOAD EXISTING RESULT ----------------
+# Existing results option:
 if option == "Load existing result":
     file = st.file_uploader("Upload JSON or TXT file", type=["json", "txt"])
 
@@ -306,7 +306,7 @@ if option == "Load existing result":
                 st.write("-", item.get("question", ""))
                 st.write("Answer:", item.get("answer", ""))
 
-# ---------------- LOAD QUESTIONNAIRE FROM JSON ----------------
+# Load questionnaire option (Json):
 if option == "Load questionnaire from JSON":
     q_file = st.file_uploader("Upload questionnaire JSON", type=["json"])
 
@@ -337,7 +337,7 @@ if option == "Load questionnaire from JSON":
         if st.session_state.start and st.session_state.participant:
             render_questionnaire(st.session_state.custom_questions)
 
-# ---------------- START NEW QUESTIONNAIRE ----------------
+# New questionnaire:
 if option == "Start new questionnaire":
     render_participant_form()
 
